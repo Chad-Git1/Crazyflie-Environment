@@ -19,3 +19,6 @@ def main():
         while viewer.is_running():
             mujoco.mj_step(model, data)
             viewer.sync()
+
+if __name__ == "__main__":
+    main()
