@@ -3,7 +3,7 @@ import mujoco.viewer
 import numpy as np
 import os
 
-path = os.path.join(
+scenePath = os.path.join(
     os.path.dirname(__file__),
     "..", "..",
     "Assets", 
@@ -18,7 +18,7 @@ def main():
         I am trying to make the drone hover in a stable manner as a test to play around with mujoco and understand what our AI
         needs to do in order to succeed.  
     '''
-    path = os.path.abspath(path)
+    path = os.path.abspath(scenePath)
 
     model = mujoco.MjModel.from_xml_path(path)
     data = mujoco.MjData(model)
