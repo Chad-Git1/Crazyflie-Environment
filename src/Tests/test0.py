@@ -11,7 +11,7 @@ scenePath = os.path.join(
     "scene.xml"
 )
 
-def main():
+def test0():
     '''
         Test 0:
 
@@ -44,4 +44,4 @@ def main():
             viewer.sync()
 
 if __name__ == "__main__":
-    main()
+    test0()
