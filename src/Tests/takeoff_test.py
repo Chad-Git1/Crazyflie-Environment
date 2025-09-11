@@ -11,10 +11,8 @@ scenePath = os.path.join(
     "scene.xml"
 )
 
-def test0():
+def takeoff_test():
     '''
-        Test 0:
-
         I am trying to make the drone hover in a stable manner as a test to play around with mujoco and understand what our AI
         needs to do in order to succeed.  
     '''
@@ -44,4 +42,4 @@ def test0():
             viewer.sync()
 
 if __name__ == "__main__":
-    test0()
+    takeoff_test()

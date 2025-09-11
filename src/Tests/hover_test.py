@@ -12,10 +12,8 @@ scenePath = os.path.join(
     "scene.xml"
 )
 
-def test1():
+def hover_test():
     '''
-        Test 1:
-
         I am trying to make the drone hover towards a target height 
     '''
     path = os.path.abspath(scenePath)
@@ -54,4 +52,4 @@ def test1():
 
 
 if __name__ == "__main__":
-    test1()
+    hover_test()
