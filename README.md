@@ -18,3 +18,19 @@ Training and final simulation done in `main.py`
 Tests are under `.../src/Tests`
 - On Windows and Linux, you can use `python <TEST>.py`
 - On macOS, you can use `mjpython <TEST>.py`
+
+# Environment and Training
+
+Simulation & Physics Engine: **[MuJoCo](https://mujoco.org/)**
+- Handles all physical dynamics of the Crazyflie drone
+- Provides 3D simulation including forces, torques, collisions, and drone kinematics
+- Real-time visualization with the mujoco viewer
+
+Environment Definition: **[Gymnasium API](https://gymnasium.farama.org/index.html)**
+- Wraps the MuJoCo model into a reinforcement learning environment
+  - Observation space (drone position, orientation, linear velocities, and angular velocities)
+  - Action space (thrust and rotation)
+  - Stepping: action --> simulation step --> calculate reward --> check termination
+
+Reinforcement Learning Algorithms
+- FILL IN LATER - not sure if this stuff should be done in individual lab repos (e.g. our group repos in the mirl-lab org on GitHub)
