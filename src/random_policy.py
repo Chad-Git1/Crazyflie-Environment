@@ -1,18 +1,9 @@
+# Single drone, random policy
+
 import os
 import time
 import mujoco.viewer
-
-from Tests.takeoff_test import takeoff_test
-from Tests.hover_test import hover_test
-from Tests.multi_hover_test import multi_hover_test
 from CrazyFlieEnv import CrazyflieEnv
-
-
-# takeoff_test()
-
-# hover_test()
-
-# multi_hover_test()
 
 
 scenePath = os.path.join(
