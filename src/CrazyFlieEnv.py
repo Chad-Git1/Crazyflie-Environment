@@ -8,18 +8,18 @@ class CrazyflieEnv(gym.Env):
     metadata = {"render_modes": ["human"], "render_fps": 60}
 
     def __init__(self, xml_path, num_drones=1, target_height=0.5):
-        '''
+        """
         Initialize the training environment
 
         Parameters
         ----------
-        xml_path: string 
+        xml_path : string 
             Path to xml MuJoCo scene
-        num_drones: int
+        num_drones : int
             Number of drones in the MuJoCo scene
-        target_height: float
+        target_height : float
             For now we are doing a basic hover test, this is the target hover height
-        '''
+        """
         super().__init__()
 
         # Store config
@@ -32,12 +32,11 @@ class CrazyflieEnv(gym.Env):
 
         # Drone obervation space
         # [pos(3) + quaternion(4) + velocity(3) + angular_velocity(3)] = 13 per drone
-        obs_dim = 13 * self.num_drones
-        obs_high = np.inf * np.ones(obs_dim, dtype=np.float32)
+        obs_high = np.inf * np.ones(13 * self.num_drones, dtype=np.float32)
         self.observation_space = spaces.Box(-obs_high, obs_high, dtype=np.float32)
 
         # Drone action space (see aicraft axes: https://en.wikipedia.org/wiki/Aircraft_principal_axes)
-        # thrust + roll + pitch + yaw
+        # thrust + roll + pitch + yaw = 4 per drone
         act_high = np.tile([0.1, 1, 1, 1], self.num_drones).astype(np.float32)
         act_low = np.tile([-0.1, -1, -1, -1], self.num_drones).astype(np.float32)
         self.action_space = spaces.Box(act_low, act_high, dtype=np.float32)
@@ -52,9 +51,9 @@ class CrazyflieEnv(gym.Env):
 
 
     def reset(self):
-        '''
+        """
         Reset the training environment
-        '''
+        """
         super().reset()
 
         mujoco.mj_resetData(self.model, self.data)
@@ -71,9 +70,9 @@ class CrazyflieEnv(gym.Env):
 
 
     def step(self, action):
-        '''
+        """
         Take a step (action) and track the observation
-        '''
+        """
 
         # Clip action within action space
         action = np.clip(action, self.action_space.low, self.action_space.high)
@@ -106,9 +105,9 @@ class CrazyflieEnv(gym.Env):
             # Reward is per drone
             total_reward += -abs(self.target_height - z_position)
 
-            # Terminate if any drone crashes
-            if z_position < 0.0:
-                done = True
+            # Terminate if any drone crashes or reaches target
+            done = (z_position < 0.0) or (abs(z_position - self.target_height) < 0.01)
+
 
         self.data.ctrl[:] = ctrl
 
@@ -120,9 +119,9 @@ class CrazyflieEnv(gym.Env):
 
 
     def _get_obs(self):
-        '''
+        """
         Retrieve an observation of the current drone state
-        '''
+        """
         obs = []
         for i in range(self.num_drones):
             base_qpos = i * self.qpos_per_drone
@@ -143,18 +142,18 @@ class CrazyflieEnv(gym.Env):
 
 
     def render(self):
-        '''
+        """
         Render the model in MuJoCo
-        '''
+        """
         if self.viewer is None:
             self.viewer = mujoco.viewer.launch_passive(self.model, self.data)
         self.viewer.sync()
 
 
     def close(self):
-        '''
+        """
         Close the MuJoCo viewer
-        '''
+        """
         if self.viewer is not None:
             self.viewer.close()
             self.viewer = None

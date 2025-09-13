@@ -56,4 +56,5 @@ with mujoco.viewer.launch_passive(env.model, env.data) as viewer:
         if done:
             print(f"Simulation ended early at step {step+1}")
             break
-    print(f"Simulation ran all {max_steps} steps\n")
+    else:
+        print(f"Simulation ran all {max_steps} steps\n")
